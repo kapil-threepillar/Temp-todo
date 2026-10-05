@@ -5,3 +5,25 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.category-select {
+  height: 29px;
+  max-width: 94px;
+  padding: 0 6px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--muted);
+  font: 500 10px 'DM Sans', sans-serif;
+  cursor: pointer;
+  outline: none;
+}
+
+.category-select:focus {
+  border-color: var(--accent);
+}
+
+.category-select option {
+  background: var(--surface);
+  color: var(--text);
+}

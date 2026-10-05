@@ -17,6 +17,7 @@ function App() {
     } catch { return initialTasks; }
   });
   const [draft, setDraft] = useState('');
+  const [draftTag, setDraftTag] = useState('PERSONAL');
   const [filter, setFilter] = useState('All');
   const [light, setLight] = useState(false);
 
@@ -28,7 +29,7 @@ function App() {
     event.preventDefault();
     const text = draft.trim();
     if (!text) return;
-    save([{ id: Date.now(), text, done: false, tag: 'TODAY' }, ...tasks]);
+    save([{ id: Date.now(), text, done: false, tag: draftTag }, ...tasks]);
     setDraft('');
   };
   const toggleTask = (id) => save(tasks.map((task) => task.id === id ? { ...task, done: !task.done } : task));
@@ -60,7 +61,7 @@ function App() {
             <div className="progress-wrap"><span>{tasks.length ? Math.round((completed / tasks.length) * 100) : 0}%</span><div className="progress-track"><div className="progress-fill" style={{ width: `${tasks.length ? (completed / tasks.length) * 100 : 0}%` }} /></div></div>
           </div>
 
-          <form className="add-form" onSubmit={addTask}><span className="add-icon"><Plus size={19} /></span><input value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Add a task to your day..." aria-label="New task" /><button type="submit" className="add-button" disabled={!draft.trim()}>Add task <span>↵</span></button></form>
+          <form className="add-form" onSubmit={addTask}><span className="add-icon"><Plus size={19} /></span><input value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Add a task to your day..." aria-label="New task" /><select className="category-select" value={draftTag} onChange={(event) => setDraftTag(event.target.value)} aria-label="Task category"><option value="PERSONAL">Personal</option><option value="WORK">Work</option><option value="WELLBEING">Wellbeing</option></select><button type="submit" className="add-button" disabled={!draft.trim()}>Add task <span>↵</span></button></form>
 
           <div className="list-toolbar"><div className="filters" role="tablist" aria-label="Filter tasks">{['All', 'Active', 'Completed'].map((item) => <button key={item} role="tab" aria-selected={filter === item} className={filter === item ? 'filter active-filter' : 'filter'} onClick={() => setFilter(item)}>{item}{item === 'All' && <span className="filter-count">{tasks.length}</span>}</button>)}</div><span className="task-total">{remaining} LEFT</span></div>
 
